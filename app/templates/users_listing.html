@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+<table class="table">
+    <thead>
+        <td>#</td>
+        <td>Prénom</td>
+        <td>Nom</td>
+        <td>habilitation 1</td>
+        <td>habilitation 2</td>
+        <td>Carte affectée ?</td>
+    </thead>
+    {% for user in users %}
+        <tr>
+            <td>{{user.id}}</td> 
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            {% for hab in user.habilitations %}
+                <td>{{hab.name}}</td>
+            {% endfor %}
+            {% for i in range(2-user.habilitations|length) %}
+                <td></td>
+            {% endfor %}
+            <td>{{not user.card is none()}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

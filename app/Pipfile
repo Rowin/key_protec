@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+pony = "*"
+beautifulsoup4 = "*"
+jinja2 = "*"
+flask = "*"
+
+[dev - packages]
+flake8 = "*"
+black = "*"
+
+[pipenv]
+allow_prereleases = true

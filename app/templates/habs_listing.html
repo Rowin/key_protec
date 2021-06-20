@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+<table class="table">
+    <thead>
+        <th>Habilitation</th>
+    </thead>
+    {% for hab in habs %}
+    <tr>
+        <td>{{hab.name}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
