@@ -2,3 +2,4 @@ secrets.py
 .ipynb_checkpoints/
 *.ipynb
 *.sqlite
+.vscode
