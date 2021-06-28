@@ -13,29 +13,6 @@ def index():
     return "Hello world!"
 
 
-@app.route("/check/<card_id>")
-@db_session
-def check(card_id: int):
-    card = Card.get(id=card_id)
-    if card is None:
-        return {"found": False}
-    else:
-        user = card.user
-        if Habilitations.get(name="Gestion Administrative") in user.habilitations:
-            granted = True
-        else:
-            granted = False
-
-        return {
-            "found": True,
-            "granted": granted,
-            "firstname": user.firstname,
-            "lastname": user.lastname,
-            "habs": [hab.name for hab in user.habilitations],
-        }
-        # return bottle.template("result.json", found='true', user=user)
-
-
 @app.route("/users/<int:user_id>/affect", methods=["POST"])
 @db_session
 def affect(user_id: int):
@@ -61,6 +38,7 @@ def deaffect(user_id: int):
     user.card = None
     flash("Carte désaffectée avec succès", "success")
     return redirect(url_for("list_users"))
+
 
 # @app.route("/cards")
 # @db_session
