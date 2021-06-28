@@ -3,16 +3,16 @@ from pony.orm import Database, Required, PrimaryKey, Set, Optional
 db = Database()
 
 
-class Card(db.Entity):
-    id = PrimaryKey(int, auto=False)
-    user = Optional("User")
+# class Card(db.Entity):
+#     id = PrimaryKey(int, auto=False)
+#     user = Optional("User")
 
 
 class User(db.Entity):
     id = PrimaryKey(int, auto=False)
     lastname = Required(str)
     firstname = Required(str)
-    card = Optional("Card")
+    card = Optional(int, unique=True)
     habilitations = Set("Habilitations")
 
     def __next__(self):

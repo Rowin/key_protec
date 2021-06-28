@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block body %}
-<table class="table">
+<table class="table table-sm table-striped  ">
     <thead>
         <td>#</td>
         <td>Prénom</td>
         <td>Nom</td>
         <td>habilitation 1</td>
         <td>habilitation 2</td>
-        <td>Carte affectée ?</td>
+        <td>Carte affectée</td>
+        <td>Détails</td>
     </thead>
     {% for user in users %}
         <tr>
@@ -20,7 +21,16 @@
             {% for i in range(2-user.habilitations|length) %}
                 <td></td>
             {% endfor %}
-            <td>{{not user.card is none()}}</td>
+            {% if user.card is none() %}
+            <form method="POST" action="{{url_for('affect', user_id=user.id)}}">
+                <td class="text-center">{{form.card_id(class_="form-control-sm")}}</td>
+                <td class="text-center">{{form.submit(class_="btn btn-outline-primary btn-sm")}}</td>
+            </form>
+            {% else %}
+                <td class="text-center"><span class="">{{user.card}}</span></td>
+                <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{{url_for('deaffect', user_id=user.id)}}">Supprimer</a>
+            {% endif %}
+            
         </tr>
     {% endfor %}
 </table>

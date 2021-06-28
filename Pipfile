@@ -9,6 +9,7 @@ pony = "*"
 beautifulsoup4 = "*"
 jinja2 = "*"
 flask = "*"
+wtforms = "*"
 
 [dev-packages]
 flake8 = "*"
