@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title%}{% endblock %}
+{% block body %}
+<table class="table">
+    <thead>
+        <th class="rotate">Salle</th>
+        {% for hab in habilitations %}
+        <th><span>{{ hab.name }}</span></th>
+        {% endfor %}
+        <th></th>
+    </thead>
+    {% for room in rooms %}
+    <form action="{{url_for("update_room", room_id=room.id)}}" method="post">
+        <tr>
+            <td>
+                {{ form.name(value=room.name, class_="form-control-sm") }}
+                {{ form.csrf_token }}
+            </td>
+            {% for hab in habilitations %}
+                <td class="checkbox">{{ form[hab.name](checked=(hab in room.habilitations)) }}</td>
+            {% endfor %}
+            <td>
+                {{ form.submit(class_="btn") }}
+            </td>
+        </tr>
+    </form>
+    {% endfor %}
+    <tr>
+        <form action="{{url_for("create_room")}}" method="post">
+            <tr>
+                <td>
+                    {{ form.name(placeholder="Nouvelle pièce", class_="form-control-sm") }}
+                    {{ form.csrf_token }}
+                </td>
+                {% for hab in habilitations %}
+                    <td>{{ form[hab.name] }}</td>
+                {% endfor %}
+                <td>
+                    {{ form.submit(value="Créer", class_="btn") }}
+                </td>
+            </tr>
+        </form>
+    </tr>
+</table>
+{% endblock %}

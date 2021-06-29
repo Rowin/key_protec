@@ -1,8 +1,8 @@
 from flask import Flask, render_template, abort, request, redirect
 from flask.helpers import flash, url_for
 from pony.orm import db_session
-from models import User, Habilitations
-from forms import AffectationForm
+from models import Room, User, Habilitation
+from forms import AffectationForm, room_form_builder
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -50,7 +50,7 @@ def deaffect(user_id: int):
 @app.route("/habs")
 @db_session
 def list_habs():
-    habs = Habilitations.select()
+    habs = Habilitation.select()
     return render_template("habs_listing.html", habs=habs)
 
 
@@ -60,3 +60,41 @@ def list_users():
     users = User.select()
     form: AffectationForm = AffectationForm(request.form)
     return render_template("users_listing.html", users=users, form=form)
+
+
+@app.route("/rooms")
+@db_session
+def list_rooms():
+    rooms = Room.select()
+    habilitations = Habilitation.select()
+    form = room_form_builder()
+    return render_template(
+        "room_listing.html", rooms=rooms, habilitations=habilitations, form=form
+    )
+
+
+@app.route("/room/<int:room_id>/update", methods=["POST"])
+@db_session
+def update_room(room_id):
+    room: Room = Room.get(id=room_id)
+
+    if room is None:
+        abort(404)
+
+    form = room_form_builder(request.form)
+    if form.validate():
+        room.name = form.name.data
+
+        hab_set = list()
+        for hab in Habilitation.select():
+            if form[hab.name].data:
+                hab_set.append(hab)
+        room.habilitations = hab_set
+        flash("Pièce mise à jour", "success")
+
+    return redirect(url_for("list_rooms"))
+
+
+@app.route("/room/create")
+def create_room():
+    pass

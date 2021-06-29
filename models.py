@@ -13,7 +13,7 @@ class User(db.Entity):
     lastname = Required(str)
     firstname = Required(str)
     card = Optional(int, unique=True)
-    habilitations = Set("Habilitations")
+    habilitations = Set("Habilitation")
 
     def __next__(self):
         pass
@@ -25,10 +25,16 @@ class User(db.Entity):
         return f"<{self.firstname} {self.lastname}>"
 
 
-class Habilitations(db.Entity):
+class Habilitation(db.Entity):
     name = Required(str)
     users = Set("User")
+    rooms = Set("Room")
+
+
+class Room(db.Entity):
+    name = Required(str)
+    habilitations = Set("Habilitation")
 
 
 db.bind(provider="sqlite", filename="database.sqlite", create_db=True)
-db.generate_mapping(create_tables=True)
+db.generate_mapping(create_tables=False)

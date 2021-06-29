@@ -1,0 +1,5 @@
+th>span{
+    writing-mode: sideways-lr;
+    rotate: 45deg;
+    transform-origin: bottom left;
+}
