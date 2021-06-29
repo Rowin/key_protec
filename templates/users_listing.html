@@ -23,7 +23,7 @@
             {% endfor %}
             {% if user.card is none() %}
             <form method="POST" action="{{url_for('affect', user_id=user.id)}}">
-                <td class="text-center">{{form.card_id(class_="form-control-sm")}}</td>
+                <td class="text-center">{{form.card_id(class_="form-control-sm")}}{{ form.csrf_token }}</td>
                 <td class="text-center">{{form.submit(class_="btn btn-outline-primary btn-sm")}}</td>
             </form>
             {% else %}
