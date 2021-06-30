@@ -28,7 +28,12 @@
             </form>
             {% else %}
                 <td class="text-center"><span class="">{{user.card}}</span></td>
-                <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{{url_for('deaffect', user_id=user.id)}}">Supprimer</a>
+                <form method="POST" action="{{url_for('deaffect', user_id=user.id)}}">
+                    <td>
+                        {{ csrf_form.csrf_token }}
+                        <input type="submit" value="Supprimer" class="btn btn-outline-danger btn-sm">
+                    </td>
+                </form>
             {% endif %}
             
         </tr>

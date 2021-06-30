@@ -28,3 +28,7 @@ def room_form_builder(*args):
         setattr(RoomModification, hab.name, BooleanField())
 
     return RoomModification(*args)
+
+
+class CSRFBase(FlaskForm):
+    pass
